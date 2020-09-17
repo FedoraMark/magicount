@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "735e9bec32da337d08d1b86fb81fb95a",
+    "revision": "a29cbfcacebc48c79c96f4cfd3c364db",
     "url": "/magicount/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/magicount/static/css/2.2ce0d9b2.chunk.css"
   },
   {
-    "revision": "0edefb299d3b7732a2c5",
+    "revision": "049687d3fb6777cc91eb",
     "url": "/magicount/static/css/main.71edb637.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/magicount/static/js/2.c6968fcd.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0edefb299d3b7732a2c5",
-    "url": "/magicount/static/js/main.4b1e82d0.chunk.js"
+    "revision": "049687d3fb6777cc91eb",
+    "url": "/magicount/static/js/main.da96755c.chunk.js"
   },
   {
     "revision": "8bbbf0de5df298c22c4d",
