@@ -2,7 +2,7 @@
 @font-face {
     font-family: "Dense";
 
-    src: local("Dense-Regular"), url("./assets/Dense-Regular.otf") format("otf");
+    src: url("./assets/Dense-Regular.otf") format("opentype");
 }
 
 // mixins
