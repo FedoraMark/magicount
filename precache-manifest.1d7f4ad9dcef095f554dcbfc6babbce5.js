@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "db5cc97aa012d410066ef6afdf13a213",
+    "revision": "69da03316d53d331506c273d7082667e",
     "url": "/magicount/index.html"
   },
   {
-    "revision": "de4d7fa4459e13f19218",
+    "revision": "e84774904bfb0d705c4f",
     "url": "/magicount/static/css/2.2ce0d9b2.chunk.css"
   },
   {
-    "revision": "7f1ad928d29c97696221",
-    "url": "/magicount/static/css/main.4159a551.chunk.css"
+    "revision": "0edefb299d3b7732a2c5",
+    "url": "/magicount/static/css/main.71edb637.chunk.css"
   },
   {
-    "revision": "de4d7fa4459e13f19218",
-    "url": "/magicount/static/js/2.8815c677.chunk.js"
+    "revision": "e84774904bfb0d705c4f",
+    "url": "/magicount/static/js/2.c6968fcd.chunk.js"
   },
   {
     "revision": "0db23f52559317cbe1954f988324c12b",
-    "url": "/magicount/static/js/2.8815c677.chunk.js.LICENSE.txt"
+    "url": "/magicount/static/js/2.c6968fcd.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7f1ad928d29c97696221",
-    "url": "/magicount/static/js/main.c3074101.chunk.js"
+    "revision": "0edefb299d3b7732a2c5",
+    "url": "/magicount/static/js/main.4b1e82d0.chunk.js"
   },
   {
     "revision": "8bbbf0de5df298c22c4d",
