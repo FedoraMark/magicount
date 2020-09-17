@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## magiCount
 
-fedoramark.github.io/magicount/
+http://fedoramark.github.io/magicount/
 
 Created by FedoraMark
 
