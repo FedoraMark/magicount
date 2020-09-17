@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import NoSleep from "nosleep.js";
 import PropTypes from "prop-types";
+import Modal from "react-bootstrap/Modal";
 import Animated from "react-css-animated";
 import { /* useSwipeable, */ Swipeable } from "react-swipeable";
 
@@ -21,15 +22,6 @@ const MINUS = "minus";
 const DURATION = 400;
 
 const noSleep = new NoSleep();
-
-// WINDOW HEIGHT FIX
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty("--vh", `${vh}px`);
-
-window.addEventListener("resize", () => {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty("--vh", `${vh}px`);
-});
 
 class magiCount extends Component {
   static propTypes = {
@@ -56,6 +48,8 @@ class magiCount extends Component {
     plusActive: false,
     minusActive: false,
     maxTouches: 0,
+
+    showOptions: false,
   };
 
   componentDidMount() {
@@ -65,8 +59,9 @@ class magiCount extends Component {
     });
 
     this.handleOrientationChange();
+    this.handleWindowSize();
 
-    document.addEventListener('touchstart', this.handleNoSleep, false);
+    document.addEventListener("touchstart", this.handleNoSleep, false);
   }
 
   componentWillUnmount() {
@@ -74,17 +69,32 @@ class magiCount extends Component {
   }
 
   // HANDLERS
+  handleWindowSize = () => {
+    // WINDOW HEIGHT FIX
+    this.getWindowSze();
+
+    window.addEventListener("resize", () => {
+      this.getWindowSze();
+    });
+  };
+
+  getWindowSze =() => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+
   handleOrientationChange = () => {
     if ("onorientationchange" in window) {
       window.addEventListener("orientationchange", (e) => {
         this.setState({ orientation: e.currentTarget.orientation });
+        this.getWindowSze()
       });
     }
   };
 
   handleNoSleep() {
     noSleep.enable();
-    document.removeEventListener('touchstart', this.handleNoSleep, false);
+    document.removeEventListener("touchstart", this.handleNoSleep, false);
   }
 
   // FUNCITONS
@@ -98,7 +108,7 @@ class magiCount extends Component {
 
   showMenu = () => {
     // TO BE DONE: dark mode, prevent sleep, use multi-touch, lock orientation
-  }
+  };
 
   scoreSwipe = (dir) => {
     if (this.state.isResetting || this.state.willTransition) {
@@ -196,6 +206,20 @@ class magiCount extends Component {
   };
 
   // RENDERERS
+  render_optionsModal = () => {
+    return (
+      <Modal.Dialog show={this.state.showOptions}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal title</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <p>Modal body text goes here.</p>
+        </Modal.Body>
+      </Modal.Dialog>
+    );
+  };
+
   render() {
     let exitAnim =
       this.state.swipeDirection === LEFT ? "fadeOutLeftBig" : "fadeOutRightBig";
@@ -207,15 +231,20 @@ class magiCount extends Component {
       enterAnim = "flipInY";
     }
 
-    var orientStyle = style.deg0;
+    var orientStyle;
     switch (this.state.orientation) {
       case 90:
       case -90:
         orientStyle = style.landscape;
         break;
       case 0:
-      default:
         orientStyle = style.portrait;
+        break;
+      default:
+        orientStyle =
+          window.innerHeight >= window.innerWidth
+            ? style.portrait
+            : style.landscape;
         break;
     }
 
@@ -232,11 +261,11 @@ class magiCount extends Component {
           document.getElementById("body").className = "normal";
         }
       } else {
-          if (this.state.score >= 0) {
-            document.getElementById("body").className = "normal";
-          } else {
-            document.getElementById("body").className = "danger";
-          }
+        if (this.state.score >= 0) {
+          document.getElementById("body").className = "normal";
+        } else {
+          document.getElementById("body").className = "danger";
+        }
       }
     }
 
