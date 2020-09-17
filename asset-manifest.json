@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/magicount/static/css/main.5f361e03.chunk.css",
+    "main.js": "/magicount/static/js/main.a063df78.chunk.js",
+    "main.js.map": "/magicount/static/js/main.a063df78.chunk.js.map",
+    "runtime-main.js": "/magicount/static/js/runtime-main.930167ca.js",
+    "runtime-main.js.map": "/magicount/static/js/runtime-main.930167ca.js.map",
+    "static/js/2.26f30b77.chunk.js": "/magicount/static/js/2.26f30b77.chunk.js",
+    "static/js/2.26f30b77.chunk.js.map": "/magicount/static/js/2.26f30b77.chunk.js.map",
+    "index.html": "/magicount/index.html",
+    "precache-manifest.aa7db79f1ed1f5be31cbbba930c3688f.js": "/magicount/precache-manifest.aa7db79f1ed1f5be31cbbba930c3688f.js",
+    "service-worker.js": "/magicount/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/magicount/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.26f30b77.chunk.js.LICENSE.txt": "/magicount/static/js/2.26f30b77.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/magicount/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.930167ca.js",
+    "static/js/2.26f30b77.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.a063df78.chunk.js"
+  ]
+}
