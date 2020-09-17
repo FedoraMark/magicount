@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/magicount/static/css/main.8e19b38a.chunk.css",
+    "main.css": "/magicount/static/css/main.9554dcd8.chunk.css",
     "main.js": "/magicount/static/js/main.cdda949f.chunk.js",
     "main.js.map": "/magicount/static/js/main.cdda949f.chunk.js.map",
     "runtime-main.js": "/magicount/static/js/runtime-main.930167ca.js",
@@ -9,10 +9,10 @@
     "static/js/2.0317a675.chunk.js": "/magicount/static/js/2.0317a675.chunk.js",
     "static/js/2.0317a675.chunk.js.map": "/magicount/static/js/2.0317a675.chunk.js.map",
     "index.html": "/magicount/index.html",
-    "precache-manifest.bedf4e12e9d799199a1e1c8f7bceb24a.js": "/magicount/precache-manifest.bedf4e12e9d799199a1e1c8f7bceb24a.js",
+    "precache-manifest.d1c9fb501791f4e3c6596797eb4be188.js": "/magicount/precache-manifest.d1c9fb501791f4e3c6596797eb4be188.js",
     "service-worker.js": "/magicount/service-worker.js",
     "static/css/2.2ce0d9b2.chunk.css.map": "/magicount/static/css/2.2ce0d9b2.chunk.css.map",
-    "static/css/main.8e19b38a.chunk.css.map": "/magicount/static/css/main.8e19b38a.chunk.css.map",
+    "static/css/main.9554dcd8.chunk.css.map": "/magicount/static/css/main.9554dcd8.chunk.css.map",
     "static/js/2.0317a675.chunk.js.LICENSE.txt": "/magicount/static/js/2.0317a675.chunk.js.LICENSE.txt",
     "static/media/magiCount.module.scss": "/magicount/static/media/Dense-Regular.87ae1e61.otf"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.930167ca.js",
     "static/css/2.2ce0d9b2.chunk.css",
     "static/js/2.0317a675.chunk.js",
-    "static/css/main.8e19b38a.chunk.css",
+    "static/css/main.9554dcd8.chunk.css",
     "static/js/main.cdda949f.chunk.js"
   ]
 }
