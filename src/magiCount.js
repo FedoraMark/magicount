@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import BootstrapSwitchButton from "bootstrap-switch-button-react";
 import classnames from "classnames";
 import NoSleep from "nosleep.js";
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Animated from "react-css-animated";
 import { Swipeable } from "react-swipeable";
-import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 
