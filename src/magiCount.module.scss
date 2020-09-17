@@ -38,10 +38,26 @@ $color-danger-darker: #c0392b;
 
     &.portrait {
         flex-direction: column;
+
+        .score {
+            font-size: 35vh;
+        }
+
+        .icon {
+            font-size: 4vh;
+        }
     }
 
     &.landscape {
         flex-direction: row-reverse;
+
+        .score {
+            font-size: 35vw;
+        }
+
+        .icon {
+            font-size: 4vw;
+        }
     }
 
     .button,
@@ -58,6 +74,7 @@ $color-danger-darker: #c0392b;
 
     .button {
         position: relative;
+        z-index: 1;
 
         flex-basis: 100%;
 
@@ -87,8 +104,6 @@ $color-danger-darker: #c0392b;
             padding: 0;
             margin: 0;
 
-            font-size: 2rem;
-
             opacity: .5;
 
             @include flex();
@@ -112,7 +127,6 @@ $color-danger-darker: #c0392b;
             padding: 0;
             margin: 0;
 
-            font-size: 18rem;
             font-weight: bold;
 
             cursor: default;
