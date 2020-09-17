@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classnames from "classnames";
+import NoSleep from "nosleep.js";
 import PropTypes from "prop-types";
 import Animated from "react-css-animated";
 import { /* useSwipeable, */ Swipeable } from "react-swipeable";
@@ -18,6 +19,8 @@ const PLUS = "plus";
 const MINUS = "minus";
 
 const DURATION = 400;
+
+const noSleep = new NoSleep();
 
 // WINDOW HEIGHT FIX
 let vh = window.innerHeight * 0.01;
@@ -62,6 +65,12 @@ class magiCount extends Component {
     });
 
     this.handleOrientationChange();
+
+    document.addEventListener('touchstart', this.handleNoSleep, false);
+  }
+
+  componentWillUnmount() {
+    noSleep.disable();
   }
 
   // HANDLERS
@@ -72,6 +81,11 @@ class magiCount extends Component {
       });
     }
   };
+
+  handleNoSleep() {
+    noSleep.enable();
+    document.removeEventListener('touchstart', this.handleNoSleep, false);
+  }
 
   // FUNCITONS
   changeBy = (amt) => {
