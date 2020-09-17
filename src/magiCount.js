@@ -14,8 +14,8 @@ const defaultScores = [10, 20, 30, 40, 50];
 const LEFT = "left";
 const RIGHT = "right";
 
-// const PLUS = "plus";
-// const MINUS = "minus";
+const PLUS = "plus";
+const MINUS = "minus";
 
 const DURATION = 400;
 
@@ -52,6 +52,7 @@ class magiCount extends Component {
 
     plusActive: false,
     minusActive: false,
+    maxTouches: 0
   };
 
   componentDidMount() {
@@ -139,6 +140,36 @@ class magiCount extends Component {
     }
   };
 
+  onTouchStart = (btn, event) => {
+    if (event.targetTouches.length > this.state.maxTouches) {
+      this.setState({maxTouches: event.targetTouches.length});
+    }
+
+    if (this.state.plusTouch || this.state.minusTouch) {
+      return;
+    }
+
+    if (btn === PLUS) {
+      this.setState({plusTouch: true});
+    } else if (btn === MINUS) {
+      this.setState({minusTouch: true});
+    }
+  }
+
+  onTouchEnd = (btn, event) => {
+    if (event.targetTouches.length > 0) {
+      return;
+    }
+
+    if (btn === PLUS) {
+      this.changeBy(this.state.maxTouches);
+      this.setState({plusTouch: false, maxTouches: 0});
+    } else if (btn === MINUS) {
+      this.changeBy(-1*this.state.maxTouches);
+      this.setState({minusTouch: false, maxTouches: 0});
+    }
+  }
+
   // RENDERERS
   render() {
     let exitAnim =
@@ -190,8 +221,8 @@ class magiCount extends Component {
         <div
           className={classnames(style.button, this.state.plusActive ? style.buttonActive : "")}
           onClick={this.changeBy.bind(this, 1)}
-          onTouchStart={() => {this.setState({plusTouch: true});}}
-          onTouchEnd={() => {this.setState({plusTouch: false});}}
+          onTouchStart={this.onTouchStart.bind(this,PLUS)}
+          onTouchEnd={this.onTouchEnd.bind(this,PLUS)}
         >
           <div className={style.icon}>
             <AiFillPlusCircle />
@@ -228,9 +259,9 @@ class magiCount extends Component {
         {/* MINUS BUTTON */}
         <div
           className={classnames(style.button, this.state.minusActive ? style.buttonActive : "")}
-          onClick={this.changeBy.bind(this, -1)}
-          onTouchStart={() => {this.setState({minusTouch: true});}}
-          onTouchEnd={() => {this.setState({minusTouch: false});}}
+          // onClick={this.changeBy.bind(this, -1)}
+          onTouchStart={this.onTouchStart.bind(this,MINUS)}
+          onTouchEnd={this.onTouchEnd.bind(this,MINUS)}
         >
           <div className={style.icon}>
             <AiFillMinusCircle />
