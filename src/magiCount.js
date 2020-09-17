@@ -14,7 +14,19 @@ const defaultScores = [10, 20, 30, 40, 50];
 const LEFT = "left";
 const RIGHT = "right";
 
+const PLUS = "plus";
+const MINUS = "minus";
+
 const DURATION = 400;
+
+// WINDOW HEIGHT FIX
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty("--vh", `${vh}px`);
+
+window.addEventListener("resize", () => {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+});
 
 class magiCount extends Component {
   static propTypes = {
@@ -36,11 +48,26 @@ class magiCount extends Component {
     swipeDirection: "",
     isResetting: true,
     willTransition: false,
+    orientation: 0,
+
+    plusActive: false,
+    minusActive: false,
   };
 
   componentDidMount() {
-    this.setState({ isResetting: false });
+    this.setState({ isResetting: false, orientation: window.innerHeight >= window.innerWidth ? 0 : 90 });
+    this.handleOrientationChange();
   }
+
+  // HANDLERS
+  handleOrientationChange = () => {
+    var self = this;
+    if ("onorientationchange" in window) {
+      window.addEventListener("orientationchange", (e) => {
+        this.setState({ orientation: e.currentTarget.orientation });
+      });
+    }
+  };
 
   // FUNCITONS
   changeBy = (amt) => {
@@ -52,6 +79,10 @@ class magiCount extends Component {
   };
 
   scoreSwipe = (dir) => {
+    if (this.state.isResetting || this.state.willTransition) {
+      return;
+    }
+
     if (!this.state.atDefault) {
       this.setState(
         {
@@ -76,6 +107,7 @@ class magiCount extends Component {
         }
       );
     } else {
+      
       let newIndex = 0;
       if (dir === LEFT) {
         newIndex = this.state.defaultIndex + 1;
@@ -120,10 +152,36 @@ class magiCount extends Component {
       enterAnim = "flipInY";
     }
 
+    var orientStyle = style.deg0;
+    switch (this.state.orientation) {
+      case 90:
+      case -90:
+        orientStyle = style.landscape;
+        break;
+      case 0:
+      default:
+        orientStyle = style.portrait;
+        break;
+    }
+
+    // set body background
+    if (this.state.atDefault) {
+      document.getElementById("body").className = "default";
+    } else {
+      if (this.state.score <= this.props.dangerAt) {
+        document.getElementById("body").className = "danger";
+      } else if (this.state.score <= this.props.warnAt) {
+        document.getElementById("body").className = "warning";
+      } else {
+        document.getElementById("body").className = "normal";
+      }
+    }
+
     return (
       <div
         className={classnames(
           style.mc_wrapper,
+          orientStyle,
           this.state.atDefault ? style.default : style.normal,
           this.state.score <= this.props.warnAt ? style.warning : "",
           this.state.score <= this.props.dangerAt ? style.danger : ""
@@ -131,8 +189,10 @@ class magiCount extends Component {
       >
         {/* PLUS BUTTON */}
         <div
-          className={classnames(style.button, style.plusButton)}
+          className={classnames(style.button, this.state.plusActive ? style.buttonActive : "")}
           onClick={this.changeBy.bind(this, 1)}
+          onTouchStart={() => {this.setState({plusTouch: true});}}
+          onTouchEnd={() => {this.setState({plusTouch: false});}}
         >
           <div className={style.icon}>
             <AiFillPlusCircle />
@@ -156,25 +216,22 @@ class magiCount extends Component {
             duration={this.state.isResetting ? DURATION / 2 : DURATION}
             easing={this.state.willTransition ? "ease-in" : "ease"}
           >
-            {this.state.score.toString().split("").map((digit, index) => {
-                return (
-                  <Animated
-                    key={index}
-                    className={style.digit}
-                    animateOnMount
-                    animationIn="fadeIn"
-                  >
-                    {digit}
-                  </Animated>
-                );
-              })}
+            <Animated
+              className={style.digit}
+              animateOnMount
+              animationIn="fadeIn"
+            >
+              {this.state.score}
+            </Animated>
           </Animated>
         </Swipeable>
 
         {/* MINUS BUTTON */}
         <div
-          className={classnames(style.button, style.minusButton)}
+          className={classnames(style.button, this.state.minusActive ? style.buttonActive : "")}
           onClick={this.changeBy.bind(this, -1)}
+          onTouchStart={() => {this.setState({minusTouch: true});}}
+          onTouchEnd={() => {this.setState({minusTouch: false});}}
         >
           <div className={style.icon}>
             <AiFillMinusCircle />
