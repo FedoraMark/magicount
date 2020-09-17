@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import Animated from "react-css-animated";
-import { useSwipeable, Swipeable } from "react-swipeable";
+import { /* useSwipeable, */ Swipeable } from "react-swipeable";
 
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 
 import "animate.css";
 import style from "./magiCount.module.scss";
-
-const ANIM = "animate__animated animate__";
 
 const defaultScores = [10, 20, 30, 40, 50];
 
@@ -31,6 +29,7 @@ class magiCount extends Component {
   };
 
   state = {
+    default: this.props.default,
     score: this.props.default,
     atDefault: true,
     defaultIndex: defaultScores.indexOf(this.props.default),
@@ -46,48 +45,75 @@ class magiCount extends Component {
   // FUNCITONS
   changeBy = (amt) => {
     // use NEGATIVES to decrement
-    this.setState({ atDefault: false, score: this.state.score + amt });
+    this.setState({
+      atDefault: false,
+      score: this.state.score + amt,
+    });
   };
 
   scoreSwipe = (dir) => {
     if (!this.state.atDefault) {
-      return;
-    }
-
-    let newIndex = 0;
-    if (dir === LEFT) {
-      newIndex = this.state.defaultIndex + 1;
-    } else if (dir === RIGHT) {
-      newIndex = this.state.defaultIndex - 1;
-    }
-
-    if (newIndex < 0) {
-      newIndex = defaultScores.length - 1;
-    } else if (newIndex >= defaultScores.length) {
-      newIndex = 0;
-    }
-
-    this.setState(
-      {
-        swipeDirection: dir,
-        transitionScore: true,
-      },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            transitionScore: false,
-            defaultIndex: newIndex,
-            score: defaultScores[newIndex],
-          });
-        }, DURATION/2);
+      this.setState(
+        {
+          isResetting: true,
+          transitionScore: true,
+          atDefault: true,
+        },
+        () => {
+          setTimeout(() => {
+            this.setState(
+              {
+                transitionScore: false,
+                score: this.state.default,
+              },
+              () => {
+                setTimeout(() => {
+                  this.setState({ isResetting: false });
+                }, DURATION / 2);
+              }
+            );
+          }, DURATION / 2);
+        }
+      );
+    } else {
+      let newIndex = 0;
+      if (dir === LEFT) {
+        newIndex = this.state.defaultIndex + 1;
+      } else if (dir === RIGHT) {
+        newIndex = this.state.defaultIndex - 1;
       }
-    );
+
+      if (newIndex < 0) {
+        newIndex = defaultScores.length - 1;
+      } else if (newIndex >= defaultScores.length) {
+        newIndex = 0;
+      }
+
+      this.setState(
+        {
+          swipeDirection: dir,
+          transitionScore: true,
+        },
+        () => {
+          setTimeout(() => {
+            this.setState({
+              transitionScore: false,
+              defaultIndex: newIndex,
+              score: defaultScores[newIndex],
+              default: defaultScores[newIndex],
+            });
+          }, DURATION / 2);
+        }
+      );
+    }
   };
 
   // RENDERERS
   render() {
-    let exitAnim = this.state.swipeDirection === LEFT ? "fadeOutLeftBig" : "fadeOutRightBig";
-    let enterAnim = this.state.swipeDirection === LEFT ? "bounceInRight" : "bounceInLeft";
+    let exitAnim =
+      this.state.swipeDirection === LEFT ? "fadeOutLeftBig" : "fadeOutRightBig";
+    let enterAnim =
+      this.state.swipeDirection === LEFT ? "bounceInRight" : "bounceInLeft";
 
     return (
       <div
@@ -119,14 +145,16 @@ class magiCount extends Component {
         >
           <Animated
             className={classnames(style.score)}
-            animationIn={this.state.isResetting ? "fadeIn" : enterAnim}
-            animationOut={this.state.isResetting ? "fadeOut" : exitAnim}
-            animateOnMount
+            animationIn={this.state.isResetting ? "shake" : enterAnim}
+            animationOut={this.state.isResetting ? "shake" : exitAnim}
             isVisible={!this.state.transitionScore}
             duration={DURATION}
             easing={this.state.transitionScore ? "ease-in" : "ease"}
           >
-            {this.state.score.toString().split("").map((digit, index) => {
+            {this.state.score
+              .toString()
+              .split("")
+              .map((digit, index) => {
                 return (
                   <span key={index} className={style.digit}>
                     {digit}

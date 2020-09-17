@@ -31,6 +31,7 @@ $color-danger-darker: #c0392b;
     height: 100vh;
     padding: 0;
     margin: 0;
+    overflow: hidden;
 
     @include flex(center,center,column);
 
