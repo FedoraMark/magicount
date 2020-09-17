@@ -14,8 +14,8 @@ const defaultScores = [10, 20, 30, 40, 50];
 const LEFT = "left";
 const RIGHT = "right";
 
-const PLUS = "plus";
-const MINUS = "minus";
+// const PLUS = "plus";
+// const MINUS = "minus";
 
 const DURATION = 400;
 
@@ -61,7 +61,6 @@ class magiCount extends Component {
 
   // HANDLERS
   handleOrientationChange = () => {
-    var self = this;
     if ("onorientationchange" in window) {
       window.addEventListener("orientationchange", (e) => {
         this.setState({ orientation: e.currentTarget.orientation });
@@ -107,7 +106,7 @@ class magiCount extends Component {
         }
       );
     } else {
-      
+
       let newIndex = 0;
       if (dir === LEFT) {
         newIndex = this.state.defaultIndex + 1;
