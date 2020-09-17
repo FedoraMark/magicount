@@ -23,8 +23,63 @@ $color-warning: #f6b93b;
 $color-warning-darker: #e58e26;
 $color-danger: #e55039;
 $color-danger-darker: #c0392b;
+$color-black-bg: black;
+$color-dark-bg: #1e272e;
+$color-dark-text: #576574;
 
 // styles
+.optModal {
+    .optModalBody {
+        @include flex();
+
+        .modalList {
+            padding: 0;
+            margin: 0;
+
+            list-style: none;
+
+            * {
+                cursor: pointer;
+            }
+
+            & > li {
+                @include flex(center, space-between);
+
+                &:not(:last-of-type) {
+                    margin-bottom: .5rem;
+                }
+
+                span {
+                    font-weight: bold;
+                }
+            }
+
+            .label {
+                margin: 0 0 0 1rem;
+
+                flex-grow: 1;
+
+                justify-self: flex-start;
+
+                font-size: 1.35rem;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &.darkModal {
+        color: $color-text;
+
+        button {
+            color: white;
+        }
+
+        & > div > div {
+            background-color: $color-dark-bg;
+        }
+    }
+}
+
 .mc_wrapper {
     width: 100vw;
     height: calc(var(--vw, 1vw) * 100);
@@ -35,6 +90,14 @@ $color-danger-darker: #c0392b;
     overflow: hidden;
 
     @include flex(center,center);
+
+    &.blurred {
+        -webkit-filter: blur(5px);
+           -moz-filter: blur(5px);
+            -ms-filter: blur(5px);
+             -o-filter: blur(5px);
+                filter: blur(5px);
+    }
 
     &.portrait {
         flex-direction: column;
@@ -197,6 +260,46 @@ $color-danger-darker: #c0392b;
 
         .icon {
             color: $color-danger-darker;
+        }
+    }
+
+    // ** DARK MODE **
+    &.dark {
+        .area,
+        .button {
+            background-color: $color-black-bg;
+        }
+
+        .icon {
+            opacity: 1;
+        }
+
+        &.default {
+            .score,
+            .icon {
+                color: $color-dark-text;
+            }
+        }
+
+        &.normal {
+            // .score,
+            .icon {
+                color: $color-normal;
+            }
+        }
+
+        &.warning {
+            .score,
+            .icon {
+                color: $color-warning;
+            }
+        }
+
+        &.danger {
+            .score,
+            .icon {
+                color: $color-danger;
+            }
         }
     }
 }

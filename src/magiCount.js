@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
 import classnames from "classnames";
 import NoSleep from "nosleep.js";
-import PropTypes from "prop-types";
+import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Animated from "react-css-animated";
-import { /* useSwipeable, */ Swipeable } from "react-swipeable";
+import { Swipeable } from "react-swipeable";
+import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 
@@ -28,11 +31,13 @@ class magiCount extends Component {
     default: PropTypes.number.isRequired,
     warnAt: PropTypes.number,
     dangerAt: PropTypes.number,
+    dark: PropTypes.bool,
   };
 
   static defaultProps = {
     warnAt: 5,
     dangerAt: 0,
+    dark: false,
   };
 
   state = {
@@ -50,6 +55,10 @@ class magiCount extends Component {
     maxTouches: 0,
 
     showOptions: false,
+
+    useDarkMode: this.props.dark,
+    preventSleep: true,
+    useMultitouch: true,
   };
 
   componentDidMount() {
@@ -71,31 +80,37 @@ class magiCount extends Component {
   // HANDLERS
   handleWindowSize = () => {
     // WINDOW HEIGHT FIX
-    this.getWindowSze();
+    this.getWindowSize();
 
     window.addEventListener("resize", () => {
-      this.getWindowSze();
+      this.getWindowSize();
+
+      this.setState({ orientation: window.innerHeight >= window.innerWidth ? 0 : 90 });
     });
   };
 
-  getWindowSze =() => {
+  getWindowSize = () => {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
-  }
+  };
 
   handleOrientationChange = () => {
     if ("onorientationchange" in window) {
       window.addEventListener("orientationchange", (e) => {
         this.setState({ orientation: e.currentTarget.orientation });
-        this.getWindowSze()
+        this.getWindowSize();
       });
     }
   };
 
-  handleNoSleep() {
+  handleNoSleep = () => {
     noSleep.enable();
     document.removeEventListener("touchstart", this.handleNoSleep, false);
-  }
+  };
+
+  handleShowModal = (show) => {
+    this.setState({ showOptions: show });
+  };
 
   // FUNCITONS
   changeBy = (amt) => {
@@ -104,10 +119,6 @@ class magiCount extends Component {
       atDefault: false,
       score: this.state.score + amt,
     });
-  };
-
-  showMenu = () => {
-    // TO BE DONE: dark mode, prevent sleep, use multi-touch, lock orientation
   };
 
   scoreSwipe = (dir) => {
@@ -190,6 +201,10 @@ class magiCount extends Component {
   };
 
   onTouchEnd = (btn, event) => {
+    if (!this.state.useMultitouch) {
+      return;
+    }
+
     event.preventDefault();
 
     if (event.targetTouches.length > 0) {
@@ -208,15 +223,61 @@ class magiCount extends Component {
   // RENDERERS
   render_optionsModal = () => {
     return (
-      <Modal.Dialog show={this.state.showOptions}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
-        </Modal.Header>
+      <Modal
+        show={this.state.showOptions}
+        onHide={this.handleShowModal.bind(this, false)}
+        // backdrop="static"
+        className={classnames(
+          style.optModal,
+          this.state.useDarkMode ? style.darkModal : ""
+        )}
+      >
+        <Modal.Body className={style.optModalBody}>
+          <ul className={style.modalList}>
+            <li
+              onClick={() => {
+                this.setState({ useDarkMode: !this.state.useDarkMode });
+              }}
+            >
+              <BootstrapSwitchButton
+                checked={this.state.useDarkMode}
+                onstyle={"dark"}
+                offstyle="light"
+              />
+              <label className={style.label}>Dark Mode</label>
+            </li>
 
-        <Modal.Body>
-          <p>Modal body text goes here.</p>
+            <li
+              onClick={() => {
+                this.setState({ useMultitouch: !this.state.useMultitouch });
+              }}
+            >
+              <BootstrapSwitchButton
+                checked={this.state.useMultitouch}
+                onstyle={"dark"}
+                offstyle="light"
+              />
+              <label className={style.label}>Use Multitouch</label>
+            </li>
+
+            <li
+              style={{opacity: ".5"}}
+              // onClick={() => {
+              //   if (this.state.preventSleep) {} else {}
+              //   this.setState({ preventSleep: !this.state.preventSleep });
+              // }}
+            >
+              <BootstrapSwitchButton
+                checked={this.state.preventSleep}
+                disabled={true}
+                onstyle={"dark"}
+                offstyle="light"
+              />
+              <label className={style.label}>Prevent Sleep</label>
+            </li>
+          </ul>
         </Modal.Body>
-      </Modal.Dialog>
+      </Modal>
     );
   };
 
@@ -249,7 +310,9 @@ class magiCount extends Component {
     }
 
     // set body background
-    if (this.state.atDefault) {
+    if (this.state.useDarkMode) {
+      document.getElementById("body").className = "dark";
+    } else if (this.state.atDefault) {
       document.getElementById("body").className = "default";
     } else {
       if (this.state.default > 0) {
@@ -281,7 +344,9 @@ class magiCount extends Component {
           this.state.score <= this.props.dangerAt && this.state.default > 0
             ? style.danger
             : "",
-          this.state.score < 0 && style.danger
+          this.state.score < 0 ? style.danger : "",
+          this.state.showOptions ? style.blurred : "",
+          this.state.useDarkMode ? style.dark : ""
         )}
       >
         {/* PLUS BUTTON */}
@@ -304,7 +369,7 @@ class magiCount extends Component {
           className={classnames(style.area, style.scoreArea)}
           onSwipedLeft={this.scoreSwipe.bind(this, LEFT)}
           onSwipedRight={this.scoreSwipe.bind(this, RIGHT)}
-          onSwipedDown={this.showMenu.bind(this)}
+          onSwipedDown={this.handleShowModal.bind(this, true)}
           trackMouse
           trackTouch
           preventDefaultTouchmoveEvent
@@ -341,6 +406,9 @@ class magiCount extends Component {
             <AiFillMinusCircle />
           </div>
         </div>
+
+        {/* OPTIONS MODAL */}
+        {this.render_optionsModal()}
       </div>
     );
   }

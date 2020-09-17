@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Magicount from './magiCount.js';
 import * as serviceWorker from './serviceWorker';
+
+import Magicount from './magiCount.js';
+
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
