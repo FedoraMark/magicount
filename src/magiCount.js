@@ -9,7 +9,7 @@ import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import "animate.css";
 import style from "./magiCount.module.scss";
 
-const defaultScores = [10, 20, 30, 40, 50];
+const defaultScores = [0, 10, 20, 30, 40, 50];
 
 const LEFT = "left";
 const RIGHT = "right";
@@ -52,11 +52,15 @@ class magiCount extends Component {
 
     plusActive: false,
     minusActive: false,
-    maxTouches: 0
+    maxTouches: 0,
   };
 
   componentDidMount() {
-    this.setState({ isResetting: false, orientation: window.innerHeight >= window.innerWidth ? 0 : 90 });
+    this.setState({
+      isResetting: false,
+      orientation: window.innerHeight >= window.innerWidth ? 0 : 90,
+    });
+
     this.handleOrientationChange();
   }
 
@@ -107,7 +111,6 @@ class magiCount extends Component {
         }
       );
     } else {
-
       let newIndex = 0;
       if (dir === LEFT) {
         newIndex = this.state.defaultIndex + 1;
@@ -141,8 +144,10 @@ class magiCount extends Component {
   };
 
   onTouchStart = (btn, event) => {
+    event.preventDefault();
+
     if (event.targetTouches.length > this.state.maxTouches) {
-      this.setState({maxTouches: event.targetTouches.length});
+      this.setState({ maxTouches: event.targetTouches.length });
     }
 
     if (this.state.plusTouch || this.state.minusTouch) {
@@ -150,25 +155,27 @@ class magiCount extends Component {
     }
 
     if (btn === PLUS) {
-      this.setState({plusTouch: true});
+      this.setState({ plusTouch: true });
     } else if (btn === MINUS) {
-      this.setState({minusTouch: true});
+      this.setState({ minusTouch: true });
     }
-  }
+  };
 
   onTouchEnd = (btn, event) => {
+    event.preventDefault();
+
     if (event.targetTouches.length > 0) {
       return;
     }
 
     if (btn === PLUS) {
       this.changeBy(this.state.maxTouches);
-      this.setState({plusTouch: false, maxTouches: 0});
+      this.setState({ plusTouch: false, maxTouches: 0 });
     } else if (btn === MINUS) {
-      this.changeBy(-1*this.state.maxTouches);
-      this.setState({minusTouch: false, maxTouches: 0});
+      this.changeBy(-1 * this.state.maxTouches);
+      this.setState({ minusTouch: false, maxTouches: 0 });
     }
-  }
+  };
 
   // RENDERERS
   render() {
@@ -213,16 +220,23 @@ class magiCount extends Component {
           style.mc_wrapper,
           orientStyle,
           this.state.atDefault ? style.default : style.normal,
-          this.state.score <= this.props.warnAt ? style.warning : "",
-          this.state.score <= this.props.dangerAt ? style.danger : ""
+          this.state.score <= this.props.warnAt && this.state.default > 0
+            ? style.warning
+            : "",
+          this.state.score <= this.props.dangerAt && this.state.default > 0
+            ? style.danger
+            : ""
         )}
       >
         {/* PLUS BUTTON */}
         <div
-          className={classnames(style.button, this.state.plusActive ? style.buttonActive : "")}
+          className={classnames(
+            style.button,
+            this.state.plusActive ? style.buttonActive : ""
+          )}
           onClick={this.changeBy.bind(this, 1)}
-          onTouchStart={this.onTouchStart.bind(this,PLUS)}
-          onTouchEnd={this.onTouchEnd.bind(this,PLUS)}
+          onTouchStart={this.onTouchStart.bind(this, PLUS)}
+          onTouchEnd={this.onTouchEnd.bind(this, PLUS)}
         >
           <div className={style.icon}>
             <AiFillPlusCircle />
@@ -258,10 +272,13 @@ class magiCount extends Component {
 
         {/* MINUS BUTTON */}
         <div
-          className={classnames(style.button, this.state.minusActive ? style.buttonActive : "")}
-          // onClick={this.changeBy.bind(this, -1)}
-          onTouchStart={this.onTouchStart.bind(this,MINUS)}
-          onTouchEnd={this.onTouchEnd.bind(this,MINUS)}
+          className={classnames(
+            style.button,
+            this.state.minusActive ? style.buttonActive : ""
+          )}
+          onClick={this.changeBy.bind(this, -1)}
+          onTouchStart={this.onTouchStart.bind(this, MINUS)}
+          onTouchEnd={this.onTouchEnd.bind(this, MINUS)}
         >
           <div className={style.icon}>
             <AiFillMinusCircle />
