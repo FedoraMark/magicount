@@ -96,6 +96,10 @@ class magiCount extends Component {
     });
   };
 
+  showMenu = () => {
+    // TO BE DONE: dark mode, prevent sleep, use multi-touch, lock orientation
+  }
+
   scoreSwipe = (dir) => {
     if (this.state.isResetting || this.state.willTransition) {
       return;
@@ -219,12 +223,20 @@ class magiCount extends Component {
     if (this.state.atDefault) {
       document.getElementById("body").className = "default";
     } else {
-      if (this.state.score <= this.props.dangerAt) {
-        document.getElementById("body").className = "danger";
-      } else if (this.state.score <= this.props.warnAt) {
-        document.getElementById("body").className = "warning";
+      if (this.state.default > 0) {
+        if (this.state.score <= this.props.dangerAt) {
+          document.getElementById("body").className = "danger";
+        } else if (this.state.score <= this.props.warnAt) {
+          document.getElementById("body").className = "warning";
+        } else {
+          document.getElementById("body").className = "normal";
+        }
       } else {
-        document.getElementById("body").className = "normal";
+          if (this.state.score >= 0) {
+            document.getElementById("body").className = "normal";
+          } else {
+            document.getElementById("body").className = "danger";
+          }
       }
     }
 
@@ -239,7 +251,8 @@ class magiCount extends Component {
             : "",
           this.state.score <= this.props.dangerAt && this.state.default > 0
             ? style.danger
-            : ""
+            : "",
+          this.state.score < 0 && style.danger
         )}
       >
         {/* PLUS BUTTON */}
@@ -262,6 +275,7 @@ class magiCount extends Component {
           className={classnames(style.area, style.scoreArea)}
           onSwipedLeft={this.scoreSwipe.bind(this, LEFT)}
           onSwipedRight={this.scoreSwipe.bind(this, RIGHT)}
+          onSwipedDown={this.showMenu.bind(this)}
           trackMouse
           trackTouch
           preventDefaultTouchmoveEvent
