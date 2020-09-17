@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "69da03316d53d331506c273d7082667e",
+    "revision": "735e9bec32da337d08d1b86fb81fb95a",
     "url": "/magicount/index.html"
   },
   {
