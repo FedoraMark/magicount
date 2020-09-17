@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/magicount/static/css/main.4159a551.chunk.css",
-    "main.js": "/magicount/static/js/main.63965327.chunk.js",
-    "main.js.map": "/magicount/static/js/main.63965327.chunk.js.map",
+    "main.js": "/magicount/static/js/main.c3074101.chunk.js",
+    "main.js.map": "/magicount/static/js/main.c3074101.chunk.js.map",
     "runtime-main.js": "/magicount/static/js/runtime-main.930167ca.js",
     "runtime-main.js.map": "/magicount/static/js/runtime-main.930167ca.js.map",
     "static/css/2.2ce0d9b2.chunk.css": "/magicount/static/css/2.2ce0d9b2.chunk.css",
     "static/js/2.8815c677.chunk.js": "/magicount/static/js/2.8815c677.chunk.js",
     "static/js/2.8815c677.chunk.js.map": "/magicount/static/js/2.8815c677.chunk.js.map",
     "index.html": "/magicount/index.html",
-    "precache-manifest.518daed792b8385b54b2d4dd90dee724.js": "/magicount/precache-manifest.518daed792b8385b54b2d4dd90dee724.js",
+    "precache-manifest.bfdf43c3102f6768ec4d26aac6c868b5.js": "/magicount/precache-manifest.bfdf43c3102f6768ec4d26aac6c868b5.js",
     "service-worker.js": "/magicount/service-worker.js",
     "static/css/2.2ce0d9b2.chunk.css.map": "/magicount/static/css/2.2ce0d9b2.chunk.css.map",
     "static/css/main.4159a551.chunk.css.map": "/magicount/static/css/main.4159a551.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.2ce0d9b2.chunk.css",
     "static/js/2.8815c677.chunk.js",
     "static/css/main.4159a551.chunk.css",
-    "static/js/main.63965327.chunk.js"
+    "static/js/main.c3074101.chunk.js"
   ]
 }
