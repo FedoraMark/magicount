@@ -1,6 +1,6 @@
 // font
 @font-face {
-    font-family: "Dense";
+    font-family: Dense;
 
     src: url("./assets/Dense-Regular.otf") format("opentype");
 }
@@ -74,7 +74,7 @@ $color-danger-darker: #c0392b;
     }
 
     .scoreArea {
-        font-family: "Dense", Helvetica, Arial, sans-serif;
+        font-family: Dense, Helvetica, Arial, sans-serif;
         font-weight: bold;
 
         .score {
@@ -82,13 +82,16 @@ $color-danger-darker: #c0392b;
             margin: 0;
 
             font-size: 18rem;
+            font-weight: bold;
+
+            cursor: default;
 
             color: $color-text;
 
             @include flex();
 
             .digit {
-                pointer-events: none;
+                user-select: none;
 
                 @include flex();
             }

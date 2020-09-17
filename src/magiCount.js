@@ -35,7 +35,7 @@ class magiCount extends Component {
     defaultIndex: defaultScores.indexOf(this.props.default),
     swipeDirection: "",
     isResetting: true,
-    transitionScore: false,
+    willTransition: false,
   };
 
   componentDidMount() {
@@ -56,14 +56,14 @@ class magiCount extends Component {
       this.setState(
         {
           isResetting: true,
-          transitionScore: true,
+          willTransition: true,
           atDefault: true,
         },
         () => {
           setTimeout(() => {
             this.setState(
               {
-                transitionScore: false,
+                willTransition: false,
                 score: this.state.default,
               },
               () => {
@@ -92,12 +92,12 @@ class magiCount extends Component {
       this.setState(
         {
           swipeDirection: dir,
-          transitionScore: true,
+          willTransition: true,
         },
         () => {
           setTimeout(() => {
             this.setState({
-              transitionScore: false,
+              willTransition: false,
               defaultIndex: newIndex,
               score: defaultScores[newIndex],
               default: defaultScores[newIndex],
@@ -114,6 +114,11 @@ class magiCount extends Component {
       this.state.swipeDirection === LEFT ? "fadeOutLeftBig" : "fadeOutRightBig";
     let enterAnim =
       this.state.swipeDirection === LEFT ? "bounceInRight" : "bounceInLeft";
+
+    if (this.state.isResetting) {
+      exitAnim = "flipOutY";
+      enterAnim = "flipInY";
+    }
 
     return (
       <div
@@ -145,20 +150,22 @@ class magiCount extends Component {
         >
           <Animated
             className={classnames(style.score)}
-            animationIn={this.state.isResetting ? "shake" : enterAnim}
-            animationOut={this.state.isResetting ? "shake" : exitAnim}
-            isVisible={!this.state.transitionScore}
-            duration={DURATION}
-            easing={this.state.transitionScore ? "ease-in" : "ease"}
+            animationIn={enterAnim}
+            animationOut={exitAnim}
+            isVisible={!this.state.willTransition}
+            duration={this.state.isResetting ? DURATION / 2 : DURATION}
+            easing={this.state.willTransition ? "ease-in" : "ease"}
           >
-            {this.state.score
-              .toString()
-              .split("")
-              .map((digit, index) => {
+            {this.state.score.toString().split("").map((digit, index) => {
                 return (
-                  <span key={index} className={style.digit}>
+                  <Animated
+                    key={index}
+                    className={style.digit}
+                    animateOnMount
+                    animationIn="fadeIn"
+                  >
                     {digit}
-                  </span>
+                  </Animated>
                 );
               })}
           </Animated>
