@@ -231,6 +231,10 @@ class magiCount extends Component {
           this.state.useDarkMode ? style.darkModal : ""
         )}
       >
+        <Modal.Header closeButton>
+          <Modal.Title>Options</Modal.Title>
+        </Modal.Header>
+
         <Modal.Body className={style.optModalBody}>
           <ul className={style.modalList}>
             <li
