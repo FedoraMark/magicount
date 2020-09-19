@@ -8,7 +8,9 @@ import Modal from "react-bootstrap/Modal";
 import Animated from "react-css-animated";
 import { Swipeable } from "react-swipeable";
 
-import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
+import { AiFillPlusCircle, AiFillMinusCircle, AiFillGithub } from "react-icons/ai";
+import { RiGitRepositoryFill } from "react-icons/ri";
+import { SiKoFi } from "react-icons/si";
 
 import "animate.css";
 import style from "./magiCount.module.scss";
@@ -231,7 +233,7 @@ class magiCount extends Component {
           this.state.useDarkMode ? style.darkModal : ""
         )}
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className={style.optModalHeader}>
           <Modal.Title>Options</Modal.Title>
         </Modal.Header>
 
@@ -280,6 +282,28 @@ class magiCount extends Component {
             </li>
           </ul>
         </Modal.Body>
+
+        <Modal.Footer as="ul" className={style.optModalFooter}>
+          <li>
+            <a href="https://github.com/FedoraMark/magicount" aria-label="GitHub">
+              <RiGitRepositoryFill />&nbsp;GitHub
+            </a>
+          </li>
+
+          <li className={style.fm}>
+              <a href="https://github.com/FedoraMark">
+                <div><AiFillGithub /></div>
+                <span className={style.fedoram}>Fedora</span>
+                <span className={style.fmark}>Mark</span>
+              </a>
+          </li>
+
+          <li>
+            <a className={style.kofi} href="https://ko-fi.com/J3J224IVG" target="_blank" rel="noopener noreferrer">
+              <SiKoFi />Ko-fi
+            </a>
+          </li>
+        </Modal.Footer>
       </Modal>
     );
   };
