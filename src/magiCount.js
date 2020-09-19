@@ -285,13 +285,13 @@ class magiCount extends Component {
 
         <Modal.Footer as="ul" className={style.optModalFooter}>
           <li>
-            <a href="https://github.com/FedoraMark/magicount" aria-label="GitHub">
+            <a href="https://github.com/FedoraMark/magicount" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
               <RiGitRepositoryFill />&nbsp;GitHub
             </a>
           </li>
 
           <li className={style.fm}>
-              <a href="https://github.com/FedoraMark">
+              <a href="https://github.com/FedoraMark" target="_blank" rel="noopener noreferrer">
                 <div><AiFillGithub /></div>
                 <span className={style.fedoram}>Fedora</span>
                 <span className={style.fmark}>Mark</span>
